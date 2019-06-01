@@ -96,17 +96,18 @@ class Device:
         print ('--- Live Capture! (press ctrl+C to break) ---')
         print('--- Place Finger To Authenticate ---')
         counter = 0
+        mydb = mysql.connector.connect(host="167.99.208.98",user="root",passwd="1conl1v1ng",database="hr")
+        mycursor = mydb.cursor()
+        
+        mycursor.execute("CREATE TABLE IF NOT EXISTS  logs (id INT AUTO_INCREMENT PRIMARY KEY, uid VARCHAR(255), user_id  VARCHAR(255),timestamp VARCHAR(255), status VARCHAR(255), punch VARCHAR(255))")
+        # payload = {"ATT":att.name, "uid":att.uid, "user_id":att.user_id, "timestamp":str( att.timestamp), "status": att.status, "punch":att.punch}
+        sql = "INSERT INTO logs (uid, user_id,status,timestamp,punch) VALUES (%s, %s,%s, %s,%s)"
+                
         for att in Device.conn.live_capture():# using a generator!
             if att is None:
                 pass
             else:
                 
-                mydb = mysql.connector.connect(host="167.99.208.98",user="root",passwd="1conl1v1ng",database="hr")
-                mycursor = mydb.cursor()
-               
-                mycursor.execute("CREATE TABLE IF NOT EXISTS  logs (id INT AUTO_INCREMENT PRIMARY KEY, uid VARCHAR(255), user_id  VARCHAR(255),timestamp VARCHAR(255), status VARCHAR(255), punch VARCHAR(255))")
-                # payload = {"ATT":att.name, "uid":att.uid, "user_id":att.user_id, "timestamp":str( att.timestamp), "status": att.status, "punch":att.punch}
-                sql = "INSERT INTO logs (uid, user_id,status,timestamp,punch) VALUES (%s, %s,%s, %s,%s)"
                 val = (att.uid, att.user_id,att.status,att.timestamp,att.punch)
                 print(val)
                 v = mycursor.execute(sql, val)
