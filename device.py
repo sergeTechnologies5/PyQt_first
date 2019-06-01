@@ -107,11 +107,13 @@ class Device:
             if att is None:
                 pass
             else:
+                try:
+                    val = (att.uid, att.user_id,att.status,att.timestamp,att.punch)
+                    v = mycursor.execute(sql, val)
+                    mydb.commit()
+                except Exception as identifier:
+                    pass
                 
-                val = (att.uid, att.user_id,att.status,att.timestamp,att.punch)
-                print(val)
-                v = mycursor.execute(sql, val)
-                mydb.commit()
             if counter >= 10:
                 Device.conn.end_live_capture = True
         print('')
