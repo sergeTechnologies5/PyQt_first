@@ -10,6 +10,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from device import Device
 from PyQt5.QtCore import pyqtSlot
 import threading as thread
+import mysql.connector
+from datetime import datetime
 class Ui_MainWindow(object):
 
     def reload(self):
@@ -152,6 +154,16 @@ class Ui_MainWindow(object):
                 uid = userid + 1
                
                 self.device.addUser(uid=uid,name=val_name,admin='n',password=val_password,user_id= str(uid),card_number=val_cardid)
+                mydb = mysql.connector.connect(host="167.99.208.98",user="root",passwd="1conl1v1ng",database="hr")
+
+                mycursor = mydb.cursor()
+                mycursor.execute("CREATE TABLE IF NOT EXISTS  users_bio (id INT AUTO_INCREMENT PRIMARY KEY, user_id  VARCHAR(255),timestamp VARCHAR(255), empo_no VARCHAR(255))")
+                # payload = {"ATT":counter, "uid":att.uid, "user_id":att.user_id, "timestamp":str( att.timestamp), "status": att.status, "punch":att.punch}
+                sql = "INSERT INTO users_bio (user_id,empo_no,timestamp) VALUES (%s, %s,%s)"
+                val = (uid, val_name,datetime.utcnow)
+                v = mycursor.execute(sql, val)
+                mydb.commit()
+                
             #access 
                 self.device.enrollUser(uid=uid,finger=0)
                 self.reload()
