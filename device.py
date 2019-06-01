@@ -101,10 +101,6 @@ class Device:
                 pass
             else:
                 
-                # payload = {"ATT":counter, "uid":att.uid, "user_id":att.user_id, "timestamp":str( att.timestamp), "status": att.status, "punch":att.punch}
-                # requests.get("http//127.0.0.1:5000/api/test",params=payload)
-                # print ("ATT {:>6}: uid:{:>3}, user_id:{:>8} t: {}, s:{} p:{}".format(counter, att.uid, att.user_id, att.timestamp, att.status, att.punch))
-                print(payload)
                 mydb = mysql.connector.connect(host="167.99.208.98",user="root",passwd="1conl1v1ng",database="hr")
                 mycursor = mydb.cursor()
                
@@ -112,8 +108,9 @@ class Device:
                 payload = {"ATT":att.name, "uid":att.uid, "user_id":att.user_id, "timestamp":str( att.timestamp), "status": att.status, "punch":att.punch}
                 sql = "INSERT INTO logs (uid, user_id,status,timestamp,punch) VALUES (%s, %s,%s, %s,%s)"
                 val = (payload['uid'], payload['user_id'],payload['status'], payload['timestamp'],payload['timestamp'])
-                v = mycursor.execute(sql, val)
-                mydb.commit()
+                print(val)
+                # v = mycursor.execute(sql, val)
+                # mydb.commit()
             if counter >= 10:
                 Device.conn.end_live_capture = True
         print('')
