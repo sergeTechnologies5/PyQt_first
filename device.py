@@ -105,12 +105,12 @@ class Device:
                 mycursor = mydb.cursor()
                
                 mycursor.execute("CREATE TABLE IF NOT EXISTS  logs (id INT AUTO_INCREMENT PRIMARY KEY, uid VARCHAR(255), user_id  VARCHAR(255),timestamp VARCHAR(255), status VARCHAR(255), punch VARCHAR(255))")
-                payload = {"ATT":att.name, "uid":att.uid, "user_id":att.user_id, "timestamp":str( att.timestamp), "status": att.status, "punch":att.punch}
+                # payload = {"ATT":att.name, "uid":att.uid, "user_id":att.user_id, "timestamp":str( att.timestamp), "status": att.status, "punch":att.punch}
                 sql = "INSERT INTO logs (uid, user_id,status,timestamp,punch) VALUES (%s, %s,%s, %s,%s)"
                 val = (att.uid, att.user_id,att.status,att.timestamp,att.punch)
                 print(val)
-                # v = mycursor.execute(sql, val)
-                # mydb.commit()
+                v = mycursor.execute(sql, val)
+                mydb.commit()
             if counter >= 10:
                 Device.conn.end_live_capture = True
         print('')
