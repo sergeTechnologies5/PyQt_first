@@ -159,7 +159,7 @@ class Ui_MainWindow(object):
                 mycursor = mydb.cursor()
                 mycursor.execute("CREATE TABLE IF NOT EXISTS  users_bio (id INT AUTO_INCREMENT PRIMARY KEY, user_id  VARCHAR(255),timestamp VARCHAR(255), empo_no VARCHAR(255))")
                 # payload = {"ATT":counter, "uid":att.uid, "user_id":att.user_id, "timestamp":str( att.timestamp), "status": att.status, "punch":att.punch}
-                sql = "INSERT INTO users_bio (user_id,empo_no,timestamp) VALUES (%s, %s,%s)"
+                sql = "INSERT INTO users_bio (user_id,employee_no,timestamp) VALUES (%s, %s,%s)"
                 val = (uid, val_name,str(datetime.datetime.now()))
                 v = mycursor.execute(sql, val)
                 mydb.commit()
