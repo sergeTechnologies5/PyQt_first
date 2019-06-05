@@ -100,6 +100,7 @@ class Device:
         mycursor = mydb.cursor()
         
         mycursor.execute("CREATE TABLE IF NOT EXISTS  bio_logs (id INT AUTO_INCREMENT PRIMARY KEY, uid VARCHAR(255),user_id int,timestamp TIMESTAMP unique , status VARCHAR(255), punch VARCHAR(255))")
+        mydb.commit()
         # payload = {"ATT":att.name, "uid":att.uid, "user_id":att.user_id, "timestamp":str( att.timestamp), "status": att.status, "punch":att.punch}
         sql = "INSERT INTO bio_logs (uid, user_id,status,timestamp,punch) VALUES (%s, %s,%s, %s,%s)"
                 
@@ -110,8 +111,9 @@ class Device:
                 try:
                     val = (att.uid, att.user_id,att.status,att.timestamp,att.punch)
                     v = mycursor.execute(sql, val)
+                    
                     mydb.commit()
-                    mydb.close()
+                    
                 except Exception as identifier:
                     pass
                 
@@ -120,6 +122,8 @@ class Device:
         print('')
         print('--- capture End!---')
         print ('')
+        mydb.close()
+        mycursor.close()
     #ennroll user
     def enrollUser(self,uid,finger):
         
