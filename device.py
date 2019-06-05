@@ -129,15 +129,18 @@ class Device:
         
         uid = uid
         print ('--- Enrolling User #{} ---'.format(uid))
-        Device.conn.delete_user_template(uid, finger)
-        Device.conn.reg_event(0xFFFF) #
-        if Device.conn.enroll_user(uid,finger):
-            Device.conn.test_voice(18) # register ok
-            tem = Device.conn.get_user_template(uid,finger)
-            print (tem)
-        else:
-            Device.conn.test_voice(18) # not registered
-        Device.conn.refresh_data()
+        try:
+            Device.conn.delete_user_template(uid, finger)
+            Device.conn.reg_event(0xFFFF) #
+            if Device.conn.enroll_user(uid,finger):
+                Device.conn.test_voice(18) # register ok
+                tem = Device.conn.get_user_template(uid,finger)
+                print (tem)
+            else:
+                Device.conn.test_voice(18) # not registered
+            Device.conn.refresh_data()
+        except Exception as identifier:
+            pass
     #addUser
     def addUser(self,uid=0,name='nn',admin='y',password='123',user_id='1',card_number=12345):
         if self.live:
@@ -158,8 +161,11 @@ class Device:
         except ZKErrorResponse as e:
             print ("error: %s" % e)
             #try new format
-            zk_user = User(uid, name, privilege, password, '', user_id, card)
-            Device.conn.save_user_template(zk_user)# forced creation
+            try:
+                zk_user = User(uid, name, privilege, password, '', user_id, card)
+                Device.conn.save_user_template(zk_user)# forced creation
+            except Exception as identifier:
+                pass
             
         Device.conn.refresh_data()
 
