@@ -99,7 +99,7 @@ class Device:
         mydb = mysql.connector.connect(host="167.99.208.98",user="root",passwd="1conl1v1ng",database="hr")
         mycursor = mydb.cursor()
         
-        mycursor.execute("CREATE TABLE IF NOT EXISTS  bio_logs (id INT AUTO_INCREMENT PRIMARY KEY, uid VARCHAR(255), user_id  VARCHAR(255),timestamp VARCHAR(255), status VARCHAR(255), punch VARCHAR(255))")
+        mycursor.execute("CREATE TABLE IF NOT EXISTS  bio_logs (id INT AUTO_INCREMENT PRIMARY KEY, uid VARCHAR(255),user_id int,timestamp TIMESTAMP unique , status VARCHAR(255), punch VARCHAR(255))")
         # payload = {"ATT":att.name, "uid":att.uid, "user_id":att.user_id, "timestamp":str( att.timestamp), "status": att.status, "punch":att.punch}
         sql = "INSERT INTO bio_logs (uid, user_id,status,timestamp,punch) VALUES (%s, %s,%s, %s,%s)"
                 
