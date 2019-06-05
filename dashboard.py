@@ -158,8 +158,10 @@ class Ui_MainWindow(object):
                 for user in users:
                     userid = user.UID
                 uid = userid + 1
-                if val_name == '' and val_password == '':
-                    print("Fill All Fields")
+                if val_name == '':
+                    print("Fill All Username")
+                elif val_password == '':
+                    print("Fill All Passwords")
                 else:
                     self.device.addUser(uid=uid,name=val_name,admin='n',password=val_password,user_id= str(uid),card_number=val_cardid)
                     mydb = mysql.connector.connect(host="167.99.208.98",user="root",passwd="1conl1v1ng",database="hr")
