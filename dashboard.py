@@ -141,9 +141,15 @@ class Ui_MainWindow(object):
     def registerUser(self):
         self.connection.setText("")
         users = self.device.getUsers()
-        val_name = self.txt_name.toPlainText()
-        val_password = self.txt_password.toPlainText()
-        val_cardid = self.txt_cardid.toPlainText()
+        val_name = ''
+        val_password = ''
+        val_cardid = ''
+        try:
+            val_name = self.txt_name.toPlainText()
+            val_password = self.txt_password.toPlainText()
+            val_cardid = self.txt_cardid.toPlainText()
+        except Exception as identifier:
+            val_cardid = '12345'
         
         if self.device.status: 
             try:
