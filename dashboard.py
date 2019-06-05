@@ -90,7 +90,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "Dashboard"))
         self.label.setText(_translate("MainWindow", "Welcome to hr system"))
         self.connection.setText(_translate("MainWindow", ""))
-        self.label_2.setText(_translate("MainWindow", "Name"))
+        self.label_2.setText(_translate("MainWindow", "Employee No"))
         self.label_3.setText(_translate("MainWindow", "Password"))
         self.label_4.setText(_translate("MainWindow", "Card ID"))
         self.btn_add.setText(_translate("MainWindow", "ADD"))
