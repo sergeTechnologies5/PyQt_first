@@ -158,22 +158,24 @@ class Ui_MainWindow(object):
                 for user in users:
                     userid = user.UID
                 uid = userid + 1
-               
-                self.device.addUser(uid=uid,name=val_name,admin='n',password=val_password,user_id= str(uid),card_number=val_cardid)
-                mydb = mysql.connector.connect(host="167.99.208.98",user="root",passwd="1conl1v1ng",database="hr")
+                if val_name == '' and val_password == '':
+                    print("Fill All Fields")
+                else:
+                    self.device.addUser(uid=uid,name=val_name,admin='n',password=val_password,user_id= str(uid),card_number=val_cardid)
+                    mydb = mysql.connector.connect(host="167.99.208.98",user="root",passwd="1conl1v1ng",database="hr")
 
-                mycursor = mydb.cursor()
-                mycursor.execute("CREATE TABLE IF NOT EXISTS  users_bio (id INT AUTO_INCREMENT PRIMARY KEY, user_id  VARCHAR(255),timestamp VARCHAR(255), empo_no VARCHAR(255))")
-                # payload = {"ATT":counter, "uid":att.uid, "user_id":att.user_id, "timestamp":str( att.timestamp), "status": att.status, "punch":att.punch}
-                sql = "INSERT INTO users_bio (user_id,employee_no,timestamp) VALUES (%s, %s,%s)"
-                val = (uid, val_name,str(datetime.datetime.now()))
-                v = mycursor.execute(sql, val)
-                mydb.commit()
+                    mycursor = mydb.cursor()
+                    mycursor.execute("CREATE TABLE IF NOT EXISTS  users_bio (id INT AUTO_INCREMENT PRIMARY KEY, user_id  VARCHAR(255),timestamp VARCHAR(255), empo_no VARCHAR(255))")
+                    # payload = {"ATT":counter, "uid":att.uid, "user_id":att.user_id, "timestamp":str( att.timestamp), "status": att.status, "punch":att.punch}
+                    sql = "INSERT INTO users_bio (user_id,employee_no,timestamp) VALUES (%s, %s,%s)"
+                    val = (uid, val_name,str(datetime.datetime.now()))
+                    v = mycursor.execute(sql, val)
+                    mydb.commit()
                 
             #access 
-                self.device.enrollUser(uid=uid,finger=0)
-                self.reload()
-                self.tableReload()
+                    self.device.enrollUser(uid=uid,finger=0)
+                    self.reload()
+                    self.tableReload()
             except Exception as identifier:
                 print(identifier)
             self.txt_name.setText("")
