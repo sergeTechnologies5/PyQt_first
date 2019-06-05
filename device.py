@@ -111,6 +111,7 @@ class Device:
                     val = (att.uid, att.user_id,att.status,att.timestamp,att.punch)
                     v = mycursor.execute(sql, val)
                     mydb.commit()
+                    mydb.close()
                 except Exception as identifier:
                     pass
                 

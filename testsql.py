@@ -1,34 +1,23 @@
-import sqlite3
+import time
+import psutil
+import matplotlib.pyplot as plt
 
+#matplotlib notebook
+plt.rcParams['animation.html'] = 'jshtml'
 
-# Create a database in RAM
-db = sqlite3.connect(':memory:')
-# Creates or opens a file called mydb with a SQLite3 DB
-db = sqlite3.connect('data/mydb')
+fig = plt.figure()
+ax = fig.add_subplot(111)
+fig.show()
 
-# Get a cursor object
+i = 0
+x,y = [],[]
+psutil.cpu_percent()
 
-
-cursor = db.cursor()
-name1 = 'Andres'
-phone1 = '3366858'
-email1 = 'user@example.com'
-# A very secure password
-password1 = '12345'
- 
-name2 = 'John'
-phone2 = '5557241'
-email2 = 'johndoe@example.com'
-password2 = 'abcdef'
- 
-# Insert user 1
-cursor.execute('''INSERT INTO users(name, phone, email, password)
-                  VALUES(?,?,?,?)''', (name1,phone1, email1, password1))
-print('First user inserted')
- 
-# Insert user 2
-cursor.execute('''INSERT INTO users(name, phone, email, password)
-                  VALUES(?,?,?,?)''', (name2,phone2, email2, password2))
-print('Second user inserted')
- 
-db.commit()
+while 1:
+    x.append(i)
+    y.append(psutil.cpu_percent())
+    ax.plot(x,y,color='b')
+    fig.canvas.draw()
+    ax.set_xlim(left=max(0,i-50),right=i+50)
+    time.sleep(0.1)
+    i+=1
